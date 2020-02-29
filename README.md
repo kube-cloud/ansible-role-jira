@@ -1,9 +1,9 @@
 # Ansible Role for Jira
 
-[![Travis](https://img.shields.io/travis/alvistack/ansible-role-jira.svg)](https://travis-ci.org/alvistack/ansible-role-jira)
-[![GitHub release](https://img.shields.io/github/release/alvistack/ansible-role-jira.svg)](https://github.com/alvistack/ansible-role-jira)
-[![GitHub license](https://img.shields.io/github/license/alvistack/ansible-role-jira.svg)](https://github.com/alvistack/ansible-role-jira/blob/master/LICENSE)
-[![Ansible Role](https://img.shields.io/badge/galaxy-alvistack.jira-blue.svg)](https://galaxy.ansible.com/alvistack/jira)
+[![Travis](https://img.shields.io/travis/kube-cloud/ansible-role-jira.svg)](https://travis-ci.org/kube-cloud/ansible-role-jira)
+[![GitHub release](https://img.shields.io/github/release/kube-cloud/ansible-role-jira.svg)](https://github.com/kube-cloud/ansible-role-jira)
+[![GitHub license](https://img.shields.io/github/license/kube-cloud/ansible-role-jira.svg)](https://github.com/kube-cloud/ansible-role-jira/blob/master/LICENSE)
+[![Ansible Role](https://img.shields.io/badge/galaxy-kube-cloud.jira-blue.svg)](https://galaxy.ansible.com/kube-cloud/jira)
 
 Ansible Role for Atlassian Jira Installation.
 
