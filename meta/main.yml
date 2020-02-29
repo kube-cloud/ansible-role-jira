@@ -1,38 +1,35 @@
 ---
-
-# (c) Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 galaxy_info:
-  role_name: jira
-  author: Wong Hoi Sing Edison <hswong3i@pantarei-design.com>
-  description: Ansible Role for Atlassian Jira Installation
-  company: PantaRei Design
-  license: Apache-2.0
-  min_ansible_version: 2.9
-  platforms:
-    - name: Ubuntu
-      versions:
-        - xenial
-        - bionic
-        - eoan
-    - name: EL
-      versions:
-        - 7
-    - name: opensuse
-      versions:
-        - all
-  galaxy_tags:
-    - system
+    author: jetune
+    role_name: jira
+    description: Ansible Role for Atlassian JIRA Installation [Fork From Wong Hoi Sing Edison]
+    company: "Kube Cloud"
+    issue_tracker_url: https://github.com/kube-cloud/ansible-role-jira.git
+    license: "license (Apache 2.0)"
+    min_ansible_version: 2.9
+    github_branch: master
+    platforms:
+        - name: EL
+          versions:
+              - 6
+              - 7
+        - name: Debian
+          versions:
+              - jessie
+              - strech
+        - name: Ubuntu
+          versions:
+              - trusty
+              - xenial
+              - bionic
+    galaxy_tags:
+        - development
+        - management
+        - project
+        - agile
+        - issues
+        - system
+        - atlassian
+        - linux
+
 dependencies: []

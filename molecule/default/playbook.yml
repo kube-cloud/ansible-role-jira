@@ -1,0 +1,36 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+    - name: "Include jira role"
+      import_role:
+        name: ansible-role-jira
+      vars:
+        jira_jvm_minimum_memory: "256m"
+        jira_jvm_maximum_memory: "512m"
+        jira_catalina_connector_scheme: "http"
+        jira_catalina_connector_secure: "true"
+        jira_catalina_context_path: "/"
+        jira_catalina_connector_port: 8080
+        jira_properties_file_generation: true
+        jira_home: "/var/atlassian/applicationdata/jira"
+        jira_extra_properties:
+          - key: "plugin.auth-crowd.sso.enabled"
+            value: "false"
+          - key: "avatar.gravatar.default"
+            value: "mm"
+          - key: "avatar.max.size"
+            value: 1048576
+          - key: "db.pool.size.idle"
+            value: 0
+          - key: "db.pool.size.max"
+            value: 80
+          - key: "jmx.enabled"
+            value: true
+          - key: "page.max.branches"
+            value: 100
+          - key: "page.max.commits"
+            value: 100
+          - key: "password.reset.validity.period"
+            value: 4320

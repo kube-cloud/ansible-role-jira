@@ -42,7 +42,21 @@ JVM_REQUIRED_ARGS='-Djava.awt.headless=true -Datlassian.standalone=JIRA -Dorg.ap
 # Prevents the JVM from suppressing stack traces if a given type of exception
 # occurs frequently, which could make it harder for support to diagnose a problem.
 #-----------------------------------------------------------------------------------
-JVM_EXTRA_ARGS="-XX:-OmitStackTraceInFastThrow -Djava.locale.providers=COMPAT -Dcatalina.connector.scheme=${CATALINA_CONNECTOR_SCHEME:-"{{ jira_catalina_connector_scheme }}"} -Dcatalina.connector.secure=${CATALINA_CONNECTOR_SECURE:-"{{ jira_catalina_connector_secure }}"} -Dcatalina.connector.proxyName=${CATALINA_CONNECTOR_PROXYNAME:-"{{ jira_catalina_connector_proxyname }}"} -Dcatalina.connector.proxyPort=${CATALINA_CONNECTOR_PROXYPORT:-"{{ jira_catalina_connector_proxyport }}"} -Dcatalina.context.path=${CATALINA_CONTEXT_PATH:-"{{ jira_catalina_context_path }}"}"
+JVM_EXTRA_ARGS="-XX:-OmitStackTraceInFastThrow \
+-Djava.locale.providers=COMPAT \
+-Dcatalina.connector.port=${CATALINA_CONNECTOR_PORT:-"{{ jira_catalina_connector_port }}"} \
+-Dcatalina.connector.redirect.port=${CATALINA_CONNECTOR_REDIRECT_PORT:-"{{ jira_catalina_connector_redirect_port }}"} \
+-Dcatalina.connector.ajp.port=${CATALINA_CONNECTOR_AJP_PORT:-"{{ jira_catalina_connector_ajp_port }}"} \
+-Dcatalina.connector.scheme=${CATALINA_CONNECTOR_SCHEME:-"{{ jira_catalina_connector_scheme }}"} \
+-Dcatalina.connector.secure=${CATALINA_CONNECTOR_SECURE:-"{{ jira_catalina_connector_secure }}"} \
+-Dcatalina.connector.ssl.certificate.file=${CATALINA_CONNECTOR_SSL_CERTIFICATE_FILE:-"{{ jira_catalina_connector_ssl_certificate_file }}"} \
+-Dcatalina.connector.ssl.key.file=${CATALINA_CONNECTOR_SSL_KEY_FILE:-"{{ jira_catalina_connector_ssl_key_file }}"} \
+-Dcatalina.connector.ssl.keystore.file=${CATALINA_CONNECTOR_SSL_KEYSTORE_FILE:-"{{ jira_catalina_connector_ssl_keystore_file }}"} \
+-Dcatalina.connector.ssl.keystore.pass=${CATALINA_CONNECTOR_SSL_KEYSTORE_PASS:-"{{ jira_catalina_connector_ssl_keystore_pass }}"} \
+-Dcatalina.connector.ssl.keystoreFile.alias=${CATALINA_CONNECTOR_SSL_KEYSTORE_ALIAS:-"{{ jira_catalina_connector_ssl_keystore_alias }}"} \
+-Dcatalina.connector.proxyName=${CATALINA_CONNECTOR_PROXYNAME:-"{{ jira_catalina_connector_proxyname }}"} \
+-Dcatalina.connector.proxyPort=${CATALINA_CONNECTOR_PROXYPORT:-"{{ jira_catalina_connector_proxyport }}"} \
+-Dcatalina.context.path=${CATALINA_CONTEXT_PATH:-"{{ jira_catalina_context_path }}"}"
 
 PRGDIR=`dirname "$0"`
 cat "${PRGDIR}"/jirabanner.txt

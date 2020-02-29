@@ -48,23 +48,50 @@
   ignore_errors: true
   tags: jira
 
+# Find User in Passwd Database
+- name: "Find Jira Owner in passwd database"
+  getent:
+    database: passwd
+    key: "{{ jira_owner }}"
+    fail_key: false
+
+# Find Group in Group Database
+- name: "Find Jira Owner group in groups database"
+  getent:
+    database: group
+    key: "{{ jira_group }}"
+    fail_key: false
+
+- name: "Define commons facts for roles"
+  set_fact:
+    jira_owner_exists: "{{ getent_passwd[jira_owner] != None }}"
+    jira_group_exists: "{{ getent_group[jira_group] != None }}"
+    _jira_create_home: "{{ (jira_create_home|bool) | ternary('--create-home', '') }}"
+    _jira_owner_system: "{{ (jira_owner_system|bool) | ternary('--system', '') }}"
+    _jira_properties_file: "{{ jira_home }}/{{ jira_properties_file_name }}"
+    _jira_properties_file_mode: "0755"
+    _jira_proxy_enabled: "{{ (jira_catalina_connector_proxyname | length > 0) and \
+    (jira_catalina_connector_proxyport | length > 0) }}"
+
 - name: groupadd
   group:
     name: "{{ jira_group }}"
     system: true
     state: "present"
   tags: jira
+  when:
+    - not jira_group_exists|bool
 
 - name: useradd
-  user:
-    name: "{{ jira_owner }}"
-    group: "{{ jira_group }}"
-    home: "{{ jira_home }}"
-    shell: "/usr/sbin/nologin"
-    system: true
-    create_home: false
-    state: "present"
-  tags: jira
+  shell:
+  args:
+    cmd: "useradd {{ jira_owner }} --home {{ jira_home }} --shell {{ jira_shell }} \
+     -g {{ jira_group }} {{ _jira_owner_system }} {{ _jira_create_home }}"
+  tags:
+    - jira
+    - molecule-idempotence-notest
+  when:
+    - not jira_owner_exists|bool
 
 - name: prepare directories
   file:
@@ -183,6 +210,92 @@
       owner: "{{ jira_owner }}"
       group: "{{ jira_group }}"
   tags: jira
+
+# Ensure that property file dont exists
+- name: Ensure that property file dont exists
+  file:
+    path: "{{ _jira_properties_file }}"
+    state: absent
+  tags:
+    - molecule-idempotence-notest
+  when:
+    - jira_properties_file_generation is defined
+    - jira_properties_file_generation|bool
+
+- name: Generate jira propertie file with initial content ({{ jira_properties_file_name }})
+  blockinfile:
+    path: "{{ _jira_properties_file }}"
+    create: true
+    block: |
+      server.context-path={{ jira_catalina_context_path }}
+      server.port={{ jira_catalina_connector_port }}
+      server.secure={{ jira_catalina_connector_secure | lower }}
+      server.scheme={{ jira_catalina_connector_scheme }}
+    owner: "{{ jira_owner }}"
+    group: "{{ jira_group }}"
+    mode: "{{ _jira_properties_file_mode }}"
+    state: present
+  tags:
+    - molecule-idempotence-notest
+  when:
+    - jira_properties_file_generation is defined
+    - jira_properties_file_generation|bool
+
+# Add other properties if exists
+- name: Add other properties if exists
+  lineinfile:
+    dest: "{{ _jira_properties_file }}"
+    regexp: "^{{ item.key }}=.*$"
+    insertafter: "server.scheme"
+    line: "{{ item.key }}={{ item.value }}"
+    owner: "{{ jira_owner }}"
+    group: "{{ jira_group }}"
+    mode: "{{ _jira_properties_file_mode }}"
+    state: present
+  loop: "{{ jira_extra_properties }}"
+  tags:
+    - molecule-idempotence-notest
+  when:
+    - jira_properties_file_generation is defined
+    - jira_properties_file_generation|bool
+    - jira_extra_properties | length > 0
+
+# Add Proxy properties
+- name: Add Proxy name property if exists
+  lineinfile:
+    dest: "{{ _jira_properties_file }}"
+    regexp: ".*proxy-name=.*$"
+    insertafter: "server.scheme"
+    line: "server.proxy-name={{ jira_catalina_connector_proxyname }}"
+    owner: "{{ jira_owner }}"
+    group: "{{ jira_group }}"
+    mode: "{{ _jira_properties_file_mode }}"
+    state: present
+  tags:
+    - molecule-idempotence-notest
+  when:
+    - jira_properties_file_generation is defined
+    - jira_properties_file_generation|bool
+    - jira_catalina_connector_proxyname is defined
+    - jira_catalina_connector_proxyname | length > 0
+
+# Add Proxy port properties
+- name: Add Proxy port property if exists
+  lineinfile:
+    dest: "{{ _jira_properties_file }}"
+    regexp: ".*proxy-port=.*$"
+    insertafter: "server.scheme"
+    line: "server.proxy-port={{ jira_catalina_connector_proxyport }}"
+    owner: "{{ jira_owner }}"
+    group: "{{ jira_group }}"
+    mode: "{{ _jira_properties_file_mode }}"
+    state: present
+  tags:
+    - molecule-idempotence-notest
+  when:
+    - jira_properties_file_generation is defined
+    - jira_properties_file_generation|bool
+    - jira_catalina_connector_proxyport is defined
 
 - name: flush handlers
   meta: flush_handlers
