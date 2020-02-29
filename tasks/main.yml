@@ -122,7 +122,7 @@
 
 - name: download archive
   vars:
-    ansible_python_interpreter: "python3"
+    ansible_python_interpreter: "{{ ansible_facts.python.executable }}"
   get_url:
     url: "{{ item.url }}"
     dest: "{{ item.dest }}"
