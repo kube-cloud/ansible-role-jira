@@ -7,7 +7,7 @@
 
     <Service name="Catalina">
     	
-        {% if _jira_proxy_enabled|bool and jira_catalina_connector_sslenabled == "false" %}
+        {% if _jira_proxy_enabled|bool and not jira_catalina_connector_ssl_enabled %}
 		<!-- Jira connector unsecured and behind Reverse Proxy (NB: Relaxing chars because of JRASERVER-67974) -->
         <Connector	port="${catalina.connector.port}"
         			relaxedPathChars="[]|" 
@@ -27,7 +27,7 @@
         			acceptCount="100"
         			disableUploadTimeout="true"
         			bindOnInit="false"/>
-		{% elif _jira_proxy_enabled|bool and jira_catalina_connector_sslenabled == "true" and jira_catalina_connector_ssl_implementation_jsse == "false" %}
+		{% elif _jira_proxy_enabled|bool and jira_catalina_connector_ssl_enabled and not jira_catalina_connector_ssl_implementation_jsse %}
 		<!-- Jira connector secured and behind reverse proxy and SSL APR (Apache Portable Runtime - OpenSSL) Enabled (NB: Relaxing chars because of JRASERVER-67974) -->
         <Connector	port="${catalina.connector.port}"
         			relaxedPathChars="[]|" 
@@ -48,7 +48,7 @@
         			acceptCount="100"
         			disableUploadTimeout="true"
         			bindOnInit="false"/>
-        {% elif _jira_proxy_enabled|bool and jira_catalina_connector_sslenabled == "true" and jira_catalina_connector_ssl_implementation_jsse == "true" %}
+        {% elif _jira_proxy_enabled|bool and jira_catalina_connector_sslenabled and jira_catalina_connector_ssl_implementation_jsse %}
 		<!-- Jira connector secured and behind reverse proxy and SSL JSSE (Java Secure Socket Extension - KeySore) Enabled (NB: Relaxing chars because of JRASERVER-67974) -->
         <Connector	port="${catalina.connector.port}"
         			relaxedPathChars="[]|" 

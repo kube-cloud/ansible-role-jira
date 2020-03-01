@@ -48,7 +48,7 @@ JVM_EXTRA_ARGS="-XX:-OmitStackTraceInFastThrow \
 -Dcatalina.connector.redirect.port=${CATALINA_CONNECTOR_REDIRECT_PORT:-"{{ jira_catalina_connector_redirect_port }}"} \
 -Dcatalina.connector.ajp.port=${CATALINA_CONNECTOR_AJP_PORT:-"{{ jira_catalina_connector_ajp_port }}"} \
 -Dcatalina.connector.scheme=${CATALINA_CONNECTOR_SCHEME:-"{{ jira_catalina_connector_scheme }}"} \
--Dcatalina.connector.secure=${CATALINA_CONNECTOR_SECURE:-"{{ jira_catalina_connector_secure }}"} \
+-Dcatalina.connector.secure=${CATALINA_CONNECTOR_SECURE:-"{{ jira_catalina_connector_secure | lower }}"} \
 -Dcatalina.connector.ssl.certificate.file=${CATALINA_CONNECTOR_SSL_CERTIFICATE_FILE:-"{{ jira_catalina_connector_ssl_certificate_file }}"} \
 -Dcatalina.connector.ssl.key.file=${CATALINA_CONNECTOR_SSL_KEY_FILE:-"{{ jira_catalina_connector_ssl_key_file }}"} \
 -Dcatalina.connector.ssl.keystore.file=${CATALINA_CONNECTOR_SSL_KEYSTORE_FILE:-"{{ jira_catalina_connector_ssl_keystore_file }}"} \
@@ -131,7 +131,7 @@ GC_JVM_PARAMETERS=""
 GC_JVM_PARAMETERS="-XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+PrintGCCause ${GC_JVM_PARAMETERS}"
 GC_JVM_PARAMETERS="-Xloggc:$LOGBASEABS/logs/atlassian-jira-gc-%t.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=20M ${GC_JVM_PARAMETERS}"
 
-CATALINA_OPTS="${GC_JVM_PARAMETERS} ${CATALINA_OPTS}"
+CATALINA_OPTS="${CATALINA_OPTS}"
 export CATALINA_OPTS
 
 sed -i "s/\(<session-timeout>\).*\(<\/session-timeout>\)/\1${SESSION_TIMEOUT:-"{{ jira_session_timeout }}"}\2/g" ${JIRA_CATALINA}/atlassian-jira/WEB-INF/web.xml

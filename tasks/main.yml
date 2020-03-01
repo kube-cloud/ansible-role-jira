@@ -71,7 +71,7 @@
     _jira_properties_file: "{{ jira_home }}/{{ jira_properties_file_name }}"
     _jira_properties_file_mode: "0755"
     _jira_proxy_enabled: "{{ (jira_catalina_connector_proxyname | length > 0) and \
-    (jira_catalina_connector_proxyport | length > 0) }}"
+    (jira_catalina_connector_proxyport is defined) }}"
 
 - name: groupadd
   group:

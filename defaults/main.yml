@@ -37,9 +37,9 @@ jira_jvm_maximum_memory: "1024m"
 
 # Proxy and context path setup.
 jira_catalina_connector_scheme: "http"
-jira_catalina_connector_secure: "false"
-jira_catalina_connector_ssl_enabled: "false"
-jira_catalina_connector_ssl_implementation_jsse: "false"
+jira_catalina_connector_secure: false
+jira_catalina_connector_ssl_enabled: false
+jira_catalina_connector_ssl_implementation_jsse: false
 jira_catalina_connector_ssl_certificate_file: ""
 jira_catalina_connector_ssl_key_file: ""
 jira_catalina_connector_ssl_keystore_file: ""
@@ -49,8 +49,8 @@ jira_catalina_connector_port: 8080
 jira_catalina_connector_redirect_port: 8443
 jira_catalina_context_path: "/"
 jira_catalina_connector_proxyname: ""
-jira_catalina_connector_proxyport: ""
-jira_catalina_connector_ajp_port: "8009"
+# jira_catalina_connector_proxyport: 80
+jira_catalina_connector_ajp_port: 8009
 jira_catalina_connector_proxy_ajp: false
 
 # Flag to generate or not the jira properties file
