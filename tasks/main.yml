@@ -48,6 +48,15 @@
   ignore_errors: true
   tags: jira
 
+# Find Java version if installed
+- name: "Find Java version if installed"
+  shell:
+  args:
+    cmd: java -version 2>&1 | awk -F '"' '/version/ {print $2}'
+  register: java_version_run
+  tags:
+    - molecule-idempotence-notest
+
 # Find User in Passwd Database
 - name: "Find Jira Owner in passwd database"
   getent:
@@ -73,6 +82,16 @@
     _jira_config_file_mode: "0755"
     _jira_proxy_enabled: "{{ (jira_catalina_connector_proxyname | length > 0) and \
     (jira_catalina_connector_proxyport is defined) }}"
+    _java_version_before_11: "{{ (java_version_run.rc == 0) and \
+    (java_version_run.stdout | version_compare('11', '<')) }}"
+    _java_installed: "{{ java_version_run.rc == 0 }}"
+
+- name: "Print Java Facts"
+  debug:
+    msg: "JAVA : [Installed : {{ _java_installed }}, Before 11 : {{ _java_version_before_11 }}, \
+    Version : {{ java_version_run.stdout }} ]"
+  tags:
+    - molecule-idempotence-notest
 
 - name: groupadd
   group:
