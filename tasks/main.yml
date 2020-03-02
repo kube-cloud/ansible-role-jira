@@ -74,7 +74,7 @@
 - name: "Define Java Facts for Ansible before 2.9"
   set_fact:
     _java_version_before_11: "{{ (java_version_run.rc == 0) and \
-    (java_version_run.stdout | version_compare('11', '<')) }}"
+    (java_version_run.stdout is version_compare('11', '<')) }}"
     _java_installed: "{{ java_version_run.rc == 0 }}"
   when:
     - ansible_version.major == 2
@@ -83,9 +83,9 @@
 - name: "Define Java Facts for Ansible started 2.9"
   set_fact:
     _java_version_before_11: "{{ (java_version_run.rc == 0) and \
-    (java_version_run.stdout | version('11', '<')) }}"
+    (java_version_run.stdout is version('11', '<')) }}"
   when:
-    - ansible_version.major > 2 or (ansible_version.major == 2 ans ansible_version.minor >= 9)
+    - ansible_version.major > 2 or (ansible_version.major == 2 and ansible_version.minor >= 9)
 
 - name: "Define commons facts for roles"
   set_fact:
