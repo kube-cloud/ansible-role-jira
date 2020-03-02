@@ -69,7 +69,8 @@
     _jira_create_home: "{{ (jira_create_home|bool) | ternary('--create-home', '') }}"
     _jira_owner_system: "{{ (jira_owner_system|bool) | ternary('--system', '') }}"
     _jira_properties_file: "{{ jira_home }}/{{ jira_properties_file_name }}"
-    _jira_properties_file_mode: "0755"
+    _jira_db_config_file: "{{ jira_home }}/{{ jira_db_config_file_name }}"
+    _jira_config_file_mode: "0755"
     _jira_proxy_enabled: "{{ (jira_catalina_connector_proxyname | length > 0) and \
     (jira_catalina_connector_proxyport is defined) }}"
 
@@ -211,6 +212,30 @@
       group: "{{ jira_group }}"
   tags: jira
 
+# Ensure that dbconfig file dont exists
+- name: Ensure that dbconfig file dont exists
+  file:
+    path: "{{ _jira_db_config_file }}"
+    state: absent
+  tags:
+    - molecule-idempotence-notest
+  when:
+    - jira_config_file_generation is defined
+    - jira_config_file_generation|bool
+
+- name: Generate database configuration
+  template:
+    dest: "{{ _jira_db_config_file }}"
+    src: "./templates/var/atlassian/application-datas/jira/dbconfig.xml.j2"
+    owner: "{{ jira_owner }}"
+    group: "{{ jira_group }}"
+    mode: "{{ _jira_config_file_mode }}"
+  tags:
+    - molecule-idempotence-notest
+  when:
+    - jira_config_file_generation is defined
+    - jira_config_file_generation|bool
+
 # Ensure that property file dont exists
 - name: Ensure that property file dont exists
   file:
@@ -219,27 +244,24 @@
   tags:
     - molecule-idempotence-notest
   when:
-    - jira_properties_file_generation is defined
-    - jira_properties_file_generation|bool
+    - jira_config_file_generation is defined
+    - jira_config_file_generation|bool
 
 - name: Generate jira propertie file with initial content ({{ jira_properties_file_name }})
   blockinfile:
     path: "{{ _jira_properties_file }}"
     create: true
     block: |
-      server.context-path={{ jira_catalina_context_path }}
-      server.port={{ jira_catalina_connector_port }}
-      server.secure={{ jira_catalina_connector_secure | lower }}
-      server.scheme={{ jira_catalina_connector_scheme }}
+      # Jira customization properties file
     owner: "{{ jira_owner }}"
     group: "{{ jira_group }}"
-    mode: "{{ _jira_properties_file_mode }}"
+    mode: "{{ _jira_config_file_mode }}"
     state: present
   tags:
     - molecule-idempotence-notest
   when:
-    - jira_properties_file_generation is defined
-    - jira_properties_file_generation|bool
+    - jira_config_file_generation is defined
+    - jira_config_file_generation|bool
 
 # Add other properties if exists
 - name: Add other properties if exists
@@ -250,52 +272,15 @@
     line: "{{ item.key }}={{ item.value }}"
     owner: "{{ jira_owner }}"
     group: "{{ jira_group }}"
-    mode: "{{ _jira_properties_file_mode }}"
+    mode: "{{ _jira_config_file_mode }}"
     state: present
   loop: "{{ jira_extra_properties }}"
   tags:
     - molecule-idempotence-notest
   when:
-    - jira_properties_file_generation is defined
-    - jira_properties_file_generation|bool
+    - jira_config_file_generation is defined
+    - jira_config_file_generation|bool
     - jira_extra_properties | length > 0
-
-# Add Proxy properties
-- name: Add Proxy name property if exists
-  lineinfile:
-    dest: "{{ _jira_properties_file }}"
-    regexp: ".*proxy-name=.*$"
-    insertafter: "server.scheme"
-    line: "server.proxy-name={{ jira_catalina_connector_proxyname }}"
-    owner: "{{ jira_owner }}"
-    group: "{{ jira_group }}"
-    mode: "{{ _jira_properties_file_mode }}"
-    state: present
-  tags:
-    - molecule-idempotence-notest
-  when:
-    - jira_properties_file_generation is defined
-    - jira_properties_file_generation|bool
-    - jira_catalina_connector_proxyname is defined
-    - jira_catalina_connector_proxyname | length > 0
-
-# Add Proxy port properties
-- name: Add Proxy port property if exists
-  lineinfile:
-    dest: "{{ _jira_properties_file }}"
-    regexp: ".*proxy-port=.*$"
-    insertafter: "server.scheme"
-    line: "server.proxy-port={{ jira_catalina_connector_proxyport }}"
-    owner: "{{ jira_owner }}"
-    group: "{{ jira_group }}"
-    mode: "{{ _jira_properties_file_mode }}"
-    state: present
-  tags:
-    - molecule-idempotence-notest
-  when:
-    - jira_properties_file_generation is defined
-    - jira_properties_file_generation|bool
-    - jira_catalina_connector_proxyport is defined
 
 - name: flush handlers
   meta: flush_handlers

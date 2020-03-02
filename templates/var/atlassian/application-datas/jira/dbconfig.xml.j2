@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jira-database-config>
+  <name>defaultDS</name>
+  <delegator-name>default</delegator-name>
+  <database-type>{{ jira_db_type }}</database-type>
+  {% if jira_db_schema is defined and jira_db_schema != "" %}
+  <schema-name>{{ jira_db_schema }}</schema-name>
+  {% endif %}
+  <jdbc-datasource>
+    <url>{{ jira_db_url }}</url>
+    <driver-class>{{ jira_db_driver }}</driver-class>
+    <username>{{ jira_db_user }}</username>
+    <password>{{ jira_db_password }}</password>
+    <pool-min-size>{{ jira_db_pool_min_size }}</pool-min-size>
+    <pool-max-size>{{ jira_db_pool_max_size }}</pool-max-size>
+    <pool-max-wait>{{ jira_db_pool_max_wait }}</pool-max-wait>
+    <pool-max-idle>{{ jira_db_pool_max_idle }}</pool-max-idle>
+    <pool-remove-abandoned>{{ jira_db_pool_remove_abandoned | lower }}</pool-remove-abandoned>
+    <pool-remove-abandoned-timeout>{{ jira_db_pool_remove_abandoned_timeout }}</pool-remove-abandoned-timeout>
+    <pool-test-on-borrow>{{ jira_db_pool_test_on_borrow | lower }}</pool-test-on-borrow>
+    <pool-test-while-idle>{{ jira_db_pool_test_while_idle | lower }}</pool-test-while-idle>
+    <validation-query>{{ jira_db_validation_query }}</validation-query>
+    <min-evictable-idle-time-millis>{{ jira_db_evictable_idle }}</min-evictable-idle-time-millis>
+    <time-between-eviction-runs-millis>{{ jira_db_between_eviction_runs }}</time-between-eviction-runs-millis>
+  </jdbc-datasource>
+</jira-database-config>

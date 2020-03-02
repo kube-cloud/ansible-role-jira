@@ -54,10 +54,65 @@ jira_catalina_connector_ajp_port: 8009
 jira_catalina_connector_proxy_ajp: false
 
 # Flag to generate or not the jira properties file
-jira_properties_file_generation: true
+jira_config_file_generation: true
 
 # jira properties file path
 jira_properties_file_name: "jira-config.properties"
+
+# Jira Database configuration file name
+jira_db_config_file_name: "dbconfig.xml"
+
+# Database type : MySQL 5.7 -> mysql57, PostgreSQL 7.2 -> postgres72, etc..
+jira_db_type: "mysql57"
+
+# Database URL
+jira_db_url: "jdbc:mysql://address=(protocol=tcp)(host=localhost)(port=3306)/jira?\
+sessionVariables=default_storage_engine=InnoDB"
+
+# Database driver
+jira_db_driver: "com.mysql.jdbc.Driver"
+
+# Database User
+jira_db_user: "jira"
+
+# Database password
+jira_db_password: "jira"
+
+# Database schema (if needed)
+# jira_db_schema: "jira"
+
+# Database min pool size
+jira_db_pool_min_size: 20
+
+# Database max pool size
+jira_db_pool_max_size: 50
+
+# Database pool max wait
+jira_db_pool_max_wait: 30000
+
+# Database pool max idle
+jira_db_pool_max_idle: 20
+
+# Database remove abandonned connexion from pool
+jira_db_pool_remove_abandoned: true
+
+# Database timeout before remove abandonned connexion from pool
+jira_db_pool_remove_abandoned_timeout: 300
+
+# Database test pool on borrow
+jira_db_pool_test_on_borrow: false
+
+# Database test pool while idle
+jira_db_pool_test_while_idle: true
+
+# Database query used to check connexion validity
+jira_db_validation_query: "select 1"
+
+# Database evictable idle
+jira_db_evictable_idle: 60000
+
+# Database eviction time between two runs (in milliseconds)
+jira_db_between_eviction_runs: 300000
 
 # jira extra properties
 jira_extra_properties: []
