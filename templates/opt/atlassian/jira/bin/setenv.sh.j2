@@ -55,7 +55,9 @@ JVM_EXTRA_ARGS="-XX:-OmitStackTraceInFastThrow \
 -Dcatalina.connector.ssl.keystore.pass=${CATALINA_CONNECTOR_SSL_KEYSTORE_PASS:-"{{ jira_catalina_connector_ssl_keystore_pass }}"} \
 -Dcatalina.connector.ssl.keystoreFile.alias=${CATALINA_CONNECTOR_SSL_KEYSTORE_ALIAS:-"{{ jira_catalina_connector_ssl_keystore_alias }}"} \
 -Dcatalina.connector.proxyName=${CATALINA_CONNECTOR_PROXYNAME:-"{{ jira_catalina_connector_proxyname }}"} \
+{% if jira_catalina_connector_proxyport is defined %}
 -Dcatalina.connector.proxyPort=${CATALINA_CONNECTOR_PROXYPORT:-"{{ jira_catalina_connector_proxyport }}"} \
+{% endif %}
 -Dcatalina.context.path=${CATALINA_CONTEXT_PATH:-"{{ jira_catalina_context_path }}"}"
 
 PRGDIR=`dirname "$0"`
