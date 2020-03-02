@@ -71,6 +71,22 @@
     key: "{{ jira_group }}"
     fail_key: false
 
+- name: "Define Java Facts for Ansible before 2.9"
+  set_fact:
+    _java_version_before_11: "{{ (java_version_run.rc == 0) and \
+    (java_version_run.stdout | version_compare('11', '<')) }}"
+    _java_installed: "{{ java_version_run.rc == 0 }}"
+  when:
+    - ansible_version.major == 2
+    - ansible_version.minor < 9
+
+- name: "Define Java Facts for Ansible started 2.9"
+  set_fact:
+    _java_version_before_11: "{{ (java_version_run.rc == 0) and \
+    (java_version_run.stdout | version('11', '<')) }}"
+  when:
+    - ansible_version.major > 2 or (ansible_version.major == 2 ans ansible_version.minor >= 9)
+
 - name: "Define commons facts for roles"
   set_fact:
     jira_owner_exists: "{{ getent_passwd[jira_owner] != None }}"
@@ -82,8 +98,6 @@
     _jira_config_file_mode: "0755"
     _jira_proxy_enabled: "{{ (jira_catalina_connector_proxyname | length > 0) and \
     (jira_catalina_connector_proxyport is defined) }}"
-    _java_version_before_11: "{{ (java_version_run.rc == 0) and \
-    (java_version_run.stdout | version_compare('11', '<')) }}"
     _java_installed: "{{ java_version_run.rc == 0 }}"
 
 - name: "Print Java Facts"
