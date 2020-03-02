@@ -49,12 +49,24 @@ JVM_EXTRA_ARGS="-XX:-OmitStackTraceInFastThrow \
 -Dcatalina.connector.ajp.port=${CATALINA_CONNECTOR_AJP_PORT:-"{{ jira_catalina_connector_ajp_port }}"} \
 -Dcatalina.connector.scheme=${CATALINA_CONNECTOR_SCHEME:-"{{ jira_catalina_connector_scheme }}"} \
 -Dcatalina.connector.secure=${CATALINA_CONNECTOR_SECURE:-"{{ jira_catalina_connector_secure | lower }}"} \
+{% if jira_catalina_connector_ssl_certificate_file is defined %}
 -Dcatalina.connector.ssl.certificate.file=${CATALINA_CONNECTOR_SSL_CERTIFICATE_FILE:-"{{ jira_catalina_connector_ssl_certificate_file }}"} \
+{% endif %}
+{% if jira_catalina_connector_ssl_key_file is defined %}
 -Dcatalina.connector.ssl.key.file=${CATALINA_CONNECTOR_SSL_KEY_FILE:-"{{ jira_catalina_connector_ssl_key_file }}"} \
+{% endif %}
+{% if jira_catalina_connector_ssl_keystore_file is defined %}
 -Dcatalina.connector.ssl.keystore.file=${CATALINA_CONNECTOR_SSL_KEYSTORE_FILE:-"{{ jira_catalina_connector_ssl_keystore_file }}"} \
+{% endif %}
+{% if jira_catalina_connector_ssl_keystore_pass is defined %}
 -Dcatalina.connector.ssl.keystore.pass=${CATALINA_CONNECTOR_SSL_KEYSTORE_PASS:-"{{ jira_catalina_connector_ssl_keystore_pass }}"} \
+{% endif %}
+{% if jira_catalina_connector_ssl_keystore_alias is defined %}
 -Dcatalina.connector.ssl.keystoreFile.alias=${CATALINA_CONNECTOR_SSL_KEYSTORE_ALIAS:-"{{ jira_catalina_connector_ssl_keystore_alias }}"} \
+{% endif %}
+{% if jira_catalina_connector_proxyname is defined %}
 -Dcatalina.connector.proxyName=${CATALINA_CONNECTOR_PROXYNAME:-"{{ jira_catalina_connector_proxyname }}"} \
+{% endif %}
 {% if jira_catalina_connector_proxyport is defined %}
 -Dcatalina.connector.proxyPort=${CATALINA_CONNECTOR_PROXYPORT:-"{{ jira_catalina_connector_proxyport }}"} \
 {% endif %}
