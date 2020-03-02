@@ -144,7 +144,7 @@ echo "Server startup logs are located in $LOGBASEABS/logs/catalina.out"
 GC_JVM_PARAMETERS=""
 GC_JVM_PARAMETERS="-XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+PrintGCCause ${GC_JVM_PARAMETERS}"
 GC_JVM_PARAMETERS="-Xloggc:$LOGBASEABS/logs/atlassian-jira-gc-%t.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=20M ${GC_JVM_PARAMETERS}"
-{% if _java_installed and _java_version_before_11 %}
+{% if (java_version_run is defined) and (java_version_run.rc == 0) and (java_version_run.stdout is version('11', '<')) %}
 CATALINA_OPTS="${GC_JVM_PARAMETERS} ${CATALINA_OPTS}"
 {% else %}
 CATALINA_OPTS="${CATALINA_OPTS}"
