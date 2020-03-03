@@ -83,6 +83,12 @@
     _jira_proxy_enabled: "{{ (jira_catalina_connector_proxyname | length > 0) and \
     (jira_catalina_connector_proxyport is defined) }}"
 
+- name: "Ensure extra packages are installed"
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ _packages }}"
+
 - name: groupadd
   group:
     name: "{{ jira_group }}"
