@@ -70,6 +70,9 @@ JVM_EXTRA_ARGS="-XX:-OmitStackTraceInFastThrow \
 {% if jira_catalina_connector_proxyport is defined %}
 -Dcatalina.connector.proxyPort=${CATALINA_CONNECTOR_PROXYPORT:-"{{ jira_catalina_connector_proxyport }}"} \
 {% endif %}
+{% if jira_catalina_connector_connexion_timeout is defined %}
+-Dcatalina.connector.connexionTimeout=${CATALINA_CONNECTOR_CONNEXION_TIMEOUT:-"{{ jira_catalina_connector_connexion_timeout }}"} \
+{% endif %}
 -Dcatalina.context.path=${CATALINA_CONTEXT_PATH:-"{{ jira_catalina_context_path }}"}"
 
 PRGDIR=`dirname "$0"`

@@ -36,6 +36,7 @@ jira_jvm_minimum_memory: "1024m"
 jira_jvm_maximum_memory: "1024m"
 
 # Proxy and context path setup.
+jira_catalina_connector_connexion_timeout: 20000
 jira_catalina_connector_scheme: "http"
 jira_catalina_connector_secure: false
 jira_catalina_connector_ssl_enabled: false

@@ -13,8 +13,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+#
+############################################################################################################
+# NB : Checksum are generated with command : openssl sha1 /archive/of/atlassian-jira-software-x.y.z.tar.gz #
+############################################################################################################
 _jira_download:
+  8.7.1.sf:
+    url: "https://product-downloads.atlassian.com/software/jira/downloads/atlassian-jira-software-8.7.1.tar.gz"
+    dest: "{{ ansible_user_dir }}/.ansible/tmp/atlassian-jira-software-8.7.1.tar.gz"
+    checksum: "sha1:23d8815d2fd39f7e32759d2f4677ffebacf358b1"
   8.7.1:
     url: "https://product-downloads.atlassian.com/software/jira/downloads/atlassian-jira-core-8.7.1.tar.gz"
     dest: "{{ ansible_user_dir }}/.ansible/tmp/atlassian-jira-core-8.7.1.tar.gz"
@@ -31,6 +38,14 @@ _jira_download:
     url: "https://product-downloads.atlassian.com/software/jira/downloads/atlassian-jira-core-8.6.0.tar.gz"
     dest: "{{ ansible_user_dir }}/.ansible/tmp/atlassian-jira-core-8.6.0.tar.gz"
     checksum: "sha1:e49cde4c32080c14468b5683d80e15b1cf7c1af1"
+  8.5.3.sf:
+    url: "https://product-downloads.atlassian.com/software/jira/downloads/atlassian-jira-software-8.5.3.tar.gz"
+    dest: "{{ ansible_user_dir }}/.ansible/tmp/atlassian-jira-software-8.5.3.tar.gz"
+    checksum: "sha1:cb0102f94a86740638f287d04d1467957a92ff93"
+  7.13.13.sf:
+    url: "https://product-downloads.atlassian.com/software/jira/downloads/atlassian-jira-software-7.13.13.tar.gz"
+    dest: "{{ ansible_user_dir }}/.ansible/tmp/atlassian-jira-software-7.13.13.tar.gz"
+    checksum: "sha1:e3b409f1463c2c00d2e775ac9c1e80816ef95c1b"
 
 _mysql_jdbc_download:
   5.1.48:

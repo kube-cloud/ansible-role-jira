@@ -14,6 +14,8 @@
         jira_catalina_context_path: "/"
         jira_catalina_connector_port: 8080
         jira_properties_file_generation: true
+        jira_catalina_connector_connexion_timeout: 20000
+        jira_version: "8.7.1.sf"
         jira_home: "/var/atlassian/applicationdata/jira"
         jira_extra_properties:
           - key: "plugin.auth-crowd.sso.enabled"
