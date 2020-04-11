@@ -134,6 +134,10 @@
     - dest: "{{ jira_home }}"
       owner: "{{ jira_owner }}"
       group: "{{ jira_group }}"
+    - dest: "{{ jira_backup_home }}"
+      owner: "{{ jira_owner }}"
+      group: "{{ jira_group }}"
+
   tags: jira
 
 - name: download archive

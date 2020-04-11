@@ -28,6 +28,9 @@ jira_owner_system: true
 # Jira home directory.
 jira_home: "/var/atlassian/application-data/jira"
 
+# Jira backup home
+jira_backup_home: "/var/atlassian/application-backups/jira"
+
 # Jira installation directory.
 jira_catalina: "/opt/atlassian/jira"
 
