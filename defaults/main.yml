@@ -140,10 +140,6 @@ jira_extra_properties: []
 #   value: jira
 # - key: jmx.enabled
 #   value: true
-# - key: page.max.branches
-#   value: 100
-# - key: page.max.commits
-#   value: 100
 # - key: password.reset.validity.period
 #   value: 4320
 # .....
