@@ -3,7 +3,7 @@
 [![Travis](https://img.shields.io/travis/com/kube-cloud/ansible-role-jira/master?style=flat)](https://travis-ci.com/kube-cloud/ansible-role-jira)
 [![GitHub release](https://img.shields.io/github/release/kube-cloud/ansible-role-jira.svg)](https://github.com/kube-cloud/ansible-role-jira)
 [![GitHub license](https://img.shields.io/github/license/kube-cloud/ansible-role-jira.svg)](https://github.com/kube-cloud/ansible-role-jira/blob/master/LICENSE)
-[![Ansible Role](https://img.shields.io/ansible/role/d/46827.svg?style=flat)](https://galaxy.ansible.com/kube-cloud/jira)
+[![Ansible Role](https://img.shields.io/ansible/role/d/46924.svg?style=flat)](https://galaxy.ansible.com/kube-cloud/jira)
 
 Ansible Role for Atlassian Jira Installation.
 
